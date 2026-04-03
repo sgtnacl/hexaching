@@ -1,5 +1,7 @@
 import type { MetadataRoute } from "next";
 
+export const dynamic = "force-static";
+
 const base = process.env.GITHUB_ACTIONS === "true" ? "/hexaching" : "";
 
 export default function manifest(): MetadataRoute.Manifest {
