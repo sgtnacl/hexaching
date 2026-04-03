@@ -257,6 +257,12 @@ function ReadingPanels({
         result={relatingResult}
         reading={relatingReading}
       />
+      {primaryReading.waiGuang.length > 0 && (
+        <WaiGuangCard title={primaryReading.title} items={primaryReading.waiGuang} />
+      )}
+      {primaryReading.quotations.length > 0 && (
+        <QuotationsCard title={primaryReading.title} items={primaryReading.quotations} />
+      )}
     </div>
   );
 }
@@ -438,6 +444,52 @@ function HexagramDiagram({ lines }: { lines: InterpretationResult["lines"] }) {
   );
 }
 
+
+function WaiGuangCard({ title, items }: { title: string; items: string[] }) {
+  return (
+    <div className="rounded-[24px] border border-slate-700/60 bg-slate-800/60 p-5">
+      <p className="text-xs font-semibold uppercase tracking-[0.28em] text-slate-400">
+        Wai Guang — Outside Illustrations
+      </p>
+      <h3 className="mt-2 text-xl font-semibold tracking-tight text-slate-100">
+        External Correspondences
+      </h3>
+      <p className="mt-1 text-sm text-amber-400">{title}</p>
+      <ul className="mt-4 space-y-2">
+        {items.map((item) => (
+          <li key={item} className="flex gap-3 text-sm leading-6 text-slate-300">
+            <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-400/70" />
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function QuotationsCard({ title, items }: { title: string; items: string[] }) {
+  return (
+    <div className="rounded-[24px] border border-slate-700/60 bg-slate-800/60 p-5">
+      <p className="text-xs font-semibold uppercase tracking-[0.28em] text-slate-400">
+        Quotations
+      </p>
+      <h3 className="mt-2 text-xl font-semibold tracking-tight text-slate-100">
+        Illustrations from World Literature
+      </h3>
+      <p className="mt-1 text-sm text-amber-400">{title}</p>
+      <div className="mt-4 space-y-4">
+        {items.map((item) => (
+          <blockquote
+            key={item}
+            className="rounded-2xl bg-slate-700/50 px-4 py-3 text-sm leading-7 text-slate-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
+          >
+            {item}
+          </blockquote>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 function pickRelevantLines(
   lines: { heading: string; paragraphs: string[] }[],

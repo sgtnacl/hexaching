@@ -1,4 +1,5 @@
 import hexagrams from "./hexagrams_full.json";
+import hatcherExtras from "./hatcher_extras.json";
 
 type RawSection = {
   heading: string;
@@ -11,6 +12,11 @@ type RawHexagram = {
   title: string;
   subtitle: string;
   sections: RawSection[];
+};
+
+type HatcherEntry = {
+  waiGuang: string[];
+  quotations: string[];
 };
 
 export type ReadingSection = {
@@ -26,26 +32,35 @@ export type HexagramReading = {
   image: ReadingSection | null;
   wisdom: ReadingSection | null;
   lines: ReadingSection[];
+  waiGuang: string[];
+  quotations: string[];
 };
 
+const extrasMap = hatcherExtras as Record<string, HatcherEntry>;
+
 const readingMap = new Map<number, HexagramReading>(
-  (hexagrams as RawHexagram[]).map((entry) => [
-    entry.number,
-    {
-      number: entry.number,
-      title: entry.title,
-      subtitle: entry.subtitle,
-      judgement: findSection(entry.sections, "The Judgement"),
-      image: findSection(entry.sections, "The Image"),
-      wisdom: findWisdomSection(entry.sections),
-      lines: entry.sections
-        .filter((section) => section.level === 3)
-        .map((section) => ({
-          heading: section.heading,
-          paragraphs: section.content,
-        })),
-    },
-  ]),
+  (hexagrams as RawHexagram[]).map((entry) => {
+    const extras = extrasMap[String(entry.number)] ?? { waiGuang: [], quotations: [] };
+    return [
+      entry.number,
+      {
+        number: entry.number,
+        title: entry.title,
+        subtitle: entry.subtitle,
+        judgement: findSection(entry.sections, "The Judgement"),
+        image: findSection(entry.sections, "The Image"),
+        wisdom: findWisdomSection(entry.sections),
+        lines: entry.sections
+          .filter((section) => section.level === 3)
+          .map((section) => ({
+            heading: section.heading,
+            paragraphs: section.content,
+          })),
+        waiGuang: extras.waiGuang,
+        quotations: extras.quotations,
+      },
+    ];
+  }),
 );
 
 export function getHexagramReading(number: number): HexagramReading | null {
