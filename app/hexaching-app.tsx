@@ -241,6 +241,12 @@ function ReadingPanels({
         judgement={primaryReading.judgement?.paragraphs ?? []}
         image={primaryReading.image?.paragraphs ?? []}
       />
+      {primaryReading.wisdom && (
+        <WisdomCard
+          title={primaryReading.title}
+          wisdom={primaryReading.wisdom}
+        />
+      )}
       <LinesCard
         title={relatingReading.title}
         movingLines={primaryResult.movingLines}
@@ -327,6 +333,29 @@ function RelatingHexagramCard({
             ))}
           </div>
         </div>
+      </div>
+    </div>
+  );
+}
+
+function WisdomCard({
+  title,
+  wisdom,
+}: {
+  title: string;
+  wisdom: { heading: string; paragraphs: string[] };
+}) {
+  return (
+    <div className="rounded-[24px] border border-stone-200 bg-stone-50/90 p-5">
+      <p className="text-xs font-semibold uppercase tracking-[0.28em] text-stone-500">
+        The Wisdom of the Hexagram
+      </p>
+      <h3 className="mt-2 text-xl font-semibold tracking-tight text-stone-950">{wisdom.heading}</h3>
+      <p className="mt-1 text-sm text-amber-900">{title}</p>
+      <div className="mt-4 space-y-3 text-sm leading-7 text-stone-700">
+        {wisdom.paragraphs.map((paragraph) => (
+          <p key={paragraph}>{paragraph}</p>
+        ))}
       </div>
     </div>
   );
