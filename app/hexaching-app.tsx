@@ -5,9 +5,9 @@ import type { InterpretationResult, ViewMode } from "./lib/iching";
 import {
   calculateFutureInterpretation,
   calculatePresentInterpretation,
-  createInterpretUrl,
   parseLinesTopToBottom,
 } from "./lib/iching";
+import { getHexagramReading } from "./lib/readings";
 
 const LINE_LABELS = [
   "Line 6 (top)",
@@ -26,6 +26,8 @@ export default function HexaChingApp() {
   const presentResult = parsedLines ? calculatePresentInterpretation(parsedLines) : null;
   const futureResult = parsedLines ? calculateFutureInterpretation(parsedLines) : null;
   const activeResult = viewMode === "present" ? presentResult : futureResult;
+  const presentReading = presentResult ? getHexagramReading(presentResult.hexagramNumber) : null;
+  const futureReading = futureResult ? getHexagramReading(futureResult.hexagramNumber) : null;
 
   return (
     <main className="min-h-screen px-4 py-8 sm:px-6 lg:px-8">
@@ -42,8 +44,8 @@ export default function HexaChingApp() {
                 </h1>
                 <p className="max-w-2xl text-base leading-7 text-slate-200 sm:text-lg">
                   Enter six line values from top to bottom using 6, 7, 8, or 9. The app
-                  calculates the present hexagram and the future hexagram created by moving
-                  lines.
+                  calculates the primary hexagram, reads its Judgement and Image, then
+                  inverts the moving lines to reveal the resulting Lines.
                 </p>
               </div>
             </div>
@@ -95,8 +97,8 @@ export default function HexaChingApp() {
               </div>
               <ol className="space-y-3 text-sm leading-6 text-stone-700">
                 <li>Enter six values using only 6, 7, 8, or 9.</li>
-                <li>Present shows the primary hexagram from the exact cast.</li>
-                <li>Future changes 6 to 7 and 9 to 8 to reveal the relating hexagram.</li>
+                <li>Present shows the primary hexagram and its core text.</li>
+                <li>Moving lines are inverted to reveal the resulting hexagram and its lines.</li>
               </ol>
               <div className="rounded-3xl bg-stone-950 px-5 py-4 text-sm leading-6 text-stone-300">
                 The calculation uses the traditional bottom-to-top line order internally even
@@ -134,12 +136,18 @@ export default function HexaChingApp() {
                     {futureResult && (
                       <CompactSummary
                         title="Future"
-                        subtitle="Relating hexagram after moving lines change"
+                        subtitle="Resulting hexagram after line inversion"
                         result={futureResult}
                         active={viewMode === "future"}
                       />
                     )}
                   </div>
+                  <ReadingPanels
+                    presentResult={presentResult}
+                    futureResult={futureResult}
+                    presentReading={presentReading}
+                    futureReading={futureReading}
+                  />
                 </>
               ) : (
                 <div className="rounded-[28px] border border-dashed border-stone-300 bg-stone-50 px-6 py-10 text-center">
@@ -147,7 +155,8 @@ export default function HexaChingApp() {
                     Fill all six boxes to reveal the matching hexagram.
                   </p>
                   <p className="mt-2 text-sm leading-6 text-stone-600">
-                    Until then, Present and Future views stay in sync and ready.
+                    Once the cast is complete, the app will show the primary reading and the
+                    resulting lines.
                   </p>
                 </div>
               )}
@@ -258,17 +267,119 @@ function ResultCard({
               ? result.movingLines.length > 0
                 ? `Moving lines: ${result.movingLines.join(", ")}`
                 : "No moving lines in this cast."
-              : "Future mode applies 6 → 7 and 9 → 8 before computing the relating hexagram."}
+              : "Future mode applies 6 to 7 and 9 to 8 before computing the relating hexagram."}
           </p>
-          <a
-            href={createInterpretUrl(result, viewMode)}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center rounded-full bg-stone-950 px-5 py-3 text-sm font-medium text-white transition hover:bg-amber-900"
-          >
-            Open on Cast I Ching
-          </a>
         </div>
+      </div>
+    </div>
+  );
+}
+
+function ReadingPanels({
+  presentResult,
+  futureResult,
+  presentReading,
+  futureReading,
+}: {
+  presentResult: InterpretationResult | null;
+  futureResult: InterpretationResult | null;
+  presentReading: ReturnType<typeof getHexagramReading>;
+  futureReading: ReturnType<typeof getHexagramReading>;
+}) {
+  if (!presentResult || !futureResult || !presentReading || !futureReading) {
+    return null;
+  }
+
+  return (
+    <div className="grid gap-4">
+      <ReadingCard
+        eyebrow="Primary Reading"
+        title={presentReading.title}
+        subtitle="The Judgement"
+        paragraphs={presentReading.judgement?.paragraphs ?? []}
+      />
+      <ReadingCard
+        eyebrow="Primary Reading"
+        title={presentReading.title}
+        subtitle="The Image"
+        paragraphs={presentReading.image?.paragraphs ?? []}
+      />
+      <LinesCard
+        title={futureReading.title}
+        movingLines={presentResult.movingLines}
+        sameHexagram={presentResult.hexagramNumber === futureResult.hexagramNumber}
+        lines={futureReading.lines}
+      />
+    </div>
+  );
+}
+
+function ReadingCard({
+  eyebrow,
+  title,
+  subtitle,
+  paragraphs,
+}: {
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  paragraphs: string[];
+}) {
+  return (
+    <div className="rounded-[24px] border border-stone-200 bg-stone-50/90 p-5">
+      <p className="text-xs font-semibold uppercase tracking-[0.28em] text-stone-500">{eyebrow}</p>
+      <h3 className="mt-2 text-xl font-semibold tracking-tight text-stone-950">{subtitle}</h3>
+      <p className="mt-1 text-sm text-amber-900">{title}</p>
+      <div className="mt-4 space-y-3 text-sm leading-7 text-stone-700">
+        {paragraphs.map((paragraph) => (
+          <p key={paragraph}>{paragraph}</p>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function LinesCard({
+  title,
+  movingLines,
+  sameHexagram,
+  lines,
+}: {
+  title: string;
+  movingLines: number[];
+  sameHexagram: boolean;
+  lines: { heading: string; paragraphs: string[] }[];
+}) {
+  return (
+    <div className="rounded-[24px] border border-stone-200 bg-stone-50/90 p-5">
+      <p className="text-xs font-semibold uppercase tracking-[0.28em] text-stone-500">
+        Resulting Hexagram
+      </p>
+      <h3 className="mt-2 text-xl font-semibold tracking-tight text-stone-950">The Lines</h3>
+      <p className="mt-1 text-sm text-amber-900">{title}</p>
+      <p className="mt-3 text-sm leading-6 text-stone-700">
+        {movingLines.length > 0
+          ? `Moving lines ${movingLines.join(", ")} were inverted to form the resulting hexagram.`
+          : sameHexagram
+            ? "No moving lines were cast, so the resulting hexagram remains the same."
+            : "The resulting hexagram was derived by inverting the moving lines."}
+      </p>
+      <div className="mt-5 space-y-5">
+        {lines.map((line) => (
+          <section
+            key={line.heading}
+            className="rounded-2xl bg-white px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]"
+          >
+            <h4 className="text-sm font-semibold uppercase tracking-[0.18em] text-stone-900">
+              {line.heading}
+            </h4>
+            <div className="mt-3 space-y-3 text-sm leading-7 text-stone-700">
+              {line.paragraphs.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+          </section>
+        ))}
       </div>
     </div>
   );
@@ -313,9 +424,7 @@ function CompactSummary({
   return (
     <div
       className={`rounded-[24px] border p-4 transition ${
-        active
-          ? "border-amber-300 bg-amber-50"
-          : "border-stone-200 bg-stone-50"
+        active ? "border-amber-300 bg-amber-50" : "border-stone-200 bg-stone-50"
       }`}
     >
       <p className="text-sm font-semibold text-stone-900">{title}</p>
