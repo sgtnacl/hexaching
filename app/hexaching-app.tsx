@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from "react";
-import type { InterpretationResult, ViewMode } from "./lib/iching";
+import type { InterpretationResult } from "./lib/iching";
 import {
   calculateFutureInterpretation,
   calculatePresentInterpretation,
@@ -20,12 +20,10 @@ const LINE_LABELS = [
 
 export default function HexaChingApp() {
   const [lines, setLines] = useState<string[]>(Array(6).fill(""));
-  const [viewMode, setViewMode] = useState<ViewMode>("present");
 
   const parsedLines = parseLinesTopToBottom(lines);
   const presentResult = parsedLines ? calculatePresentInterpretation(parsedLines) : null;
   const futureResult = parsedLines ? calculateFutureInterpretation(parsedLines) : null;
-  const activeResult = viewMode === "present" ? presentResult : futureResult;
   const presentReading = presentResult ? getHexagramReading(presentResult.hexagramNumber) : null;
   const futureReading = futureResult ? getHexagramReading(futureResult.hexagramNumber) : null;
 
@@ -115,33 +113,19 @@ export default function HexaChingApp() {
                     Interpretation
                   </p>
                   <h2 className="mt-2 text-2xl font-semibold tracking-tight text-stone-900">
-                    {activeResult ? "Hexagram Match" : "Awaiting Complete Cast"}
+                    {presentResult ? "Hexagram Match" : "Awaiting Complete Cast"}
                   </h2>
                 </div>
-                <ModeToggle viewMode={viewMode} onChange={setViewMode} />
               </div>
 
-              {activeResult ? (
+              {presentResult ? (
                 <>
-                  <ResultCard result={activeResult} viewMode={viewMode} />
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    {presentResult && (
-                      <CompactSummary
-                        title="Present"
-                        subtitle="Primary hexagram from your cast"
-                        result={presentResult}
-                        active={viewMode === "present"}
-                      />
-                    )}
-                    {futureResult && (
-                      <CompactSummary
-                        title="Future"
-                        subtitle="Resulting hexagram after line inversion"
-                        result={futureResult}
-                        active={viewMode === "future"}
-                      />
-                    )}
-                  </div>
+                  <ResultCard result={presentResult} />
+                  <CompactSummary
+                    title="Present"
+                    subtitle="Primary hexagram from your cast"
+                    result={presentResult}
+                  />
                   <ReadingPanels
                     presentResult={presentResult}
                     futureResult={futureResult}
@@ -198,54 +182,7 @@ function LineInput({
   );
 }
 
-function ModeToggle({
-  viewMode,
-  onChange,
-}: {
-  viewMode: ViewMode;
-  onChange: (mode: ViewMode) => void;
-}) {
-  return (
-    <div className="inline-flex rounded-full bg-stone-100 p-1">
-      <ToggleButton active={viewMode === "present"} onClick={() => onChange("present")}>
-        Present
-      </ToggleButton>
-      <ToggleButton active={viewMode === "future"} onClick={() => onChange("future")}>
-        Future
-      </ToggleButton>
-    </div>
-  );
-}
-
-function ToggleButton({
-  active,
-  children,
-  onClick,
-}: {
-  active: boolean;
-  children: React.ReactNode;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={`rounded-full px-4 py-2 text-sm font-medium transition ${
-        active ? "bg-stone-950 text-white shadow-sm" : "text-stone-600 hover:text-stone-900"
-      }`}
-    >
-      {children}
-    </button>
-  );
-}
-
-function ResultCard({
-  result,
-  viewMode,
-}: {
-  result: InterpretationResult;
-  viewMode: ViewMode;
-}) {
+function ResultCard({ result }: { result: InterpretationResult }) {
   return (
     <div className="rounded-[30px] bg-[linear-gradient(180deg,_#fffdf8,_#f7f4ea)] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] sm:p-6">
       <div className="grid gap-6 sm:grid-cols-[140px_1fr] sm:items-center">
@@ -254,7 +191,7 @@ function ResultCard({
         </div>
         <div className="space-y-3">
           <p className="text-xs font-semibold uppercase tracking-[0.28em] text-amber-700">
-            {viewMode === "present" ? "Present Hexagram" : "Future Hexagram"}
+            Present Hexagram
           </p>
           <div>
             <h3 className="text-3xl font-semibold tracking-tight text-stone-950">
@@ -263,11 +200,9 @@ function ResultCard({
             <p className="mt-1 text-lg font-medium text-amber-900">{result.hexagramName}</p>
           </div>
           <p className="text-sm leading-6 text-stone-700">
-            {viewMode === "present"
-              ? result.movingLines.length > 0
-                ? `Moving lines: ${result.movingLines.join(", ")}`
-                : "No moving lines in this cast."
-              : "Future mode applies 6 to 7 and 9 to 8 before computing the relating hexagram."}
+            {result.movingLines.length > 0
+              ? `Moving lines: ${result.movingLines.join(", ")}`
+              : "No moving lines in this cast."}
           </p>
         </div>
       </div>
@@ -308,7 +243,7 @@ function ReadingPanels({
         title={futureReading.title}
         movingLines={presentResult.movingLines}
         sameHexagram={presentResult.hexagramNumber === futureResult.hexagramNumber}
-        lines={futureReading.lines}
+        lines={pickRelevantLines(futureReading.lines, presentResult.movingLines)}
       />
     </div>
   );
@@ -365,7 +300,7 @@ function LinesCard({
             : "The resulting hexagram was derived by inverting the moving lines."}
       </p>
       <div className="mt-5 space-y-5">
-        {lines.map((line) => (
+        {lines.length > 0 ? lines.map((line) => (
           <section
             key={line.heading}
             className="rounded-2xl bg-white px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]"
@@ -379,7 +314,11 @@ function LinesCard({
               ))}
             </div>
           </section>
-        ))}
+        )) : (
+          <div className="rounded-2xl bg-white px-4 py-4 text-sm leading-7 text-stone-700 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]">
+            No moving lines were selected, so there are no resulting line texts to display.
+          </div>
+        )}
       </div>
     </div>
   );
@@ -414,19 +353,13 @@ function CompactSummary({
   title,
   subtitle,
   result,
-  active,
 }: {
   title: string;
   subtitle: string;
   result: InterpretationResult;
-  active: boolean;
 }) {
   return (
-    <div
-      className={`rounded-[24px] border p-4 transition ${
-        active ? "border-amber-300 bg-amber-50" : "border-stone-200 bg-stone-50"
-      }`}
-    >
+    <div className="rounded-[24px] border border-amber-300 bg-amber-50 p-4 transition">
       <p className="text-sm font-semibold text-stone-900">{title}</p>
       <p className="mt-1 text-xs leading-5 text-stone-600">{subtitle}</p>
       <p className="mt-4 text-2xl font-semibold tracking-tight text-stone-950">
@@ -435,4 +368,42 @@ function CompactSummary({
       <p className="mt-1 text-sm text-stone-700">{result.hexagramName}</p>
     </div>
   );
+}
+
+function pickRelevantLines(
+  lines: { heading: string; paragraphs: string[] }[],
+  movingLines: number[],
+) {
+  if (movingLines.length === 0) {
+    return [];
+  }
+
+  const patterns = movingLines.map((lineNumber) => lineHeadingPattern(lineNumber));
+
+  return lines.filter((line) => {
+    const heading = line.heading.toLowerCase();
+    if (movingLines.length === 6 && heading.includes("use of ")) {
+      return true;
+    }
+    return patterns.some((pattern) => heading.includes(pattern));
+  });
+}
+
+function lineHeadingPattern(lineNumber: number) {
+  switch (lineNumber) {
+    case 1:
+      return "at the beginning";
+    case 2:
+      return "in the second place";
+    case 3:
+      return "in the third place";
+    case 4:
+      return "in the fourth place";
+    case 5:
+      return "in the fifth place";
+    case 6:
+      return "at the top";
+    default:
+      return "";
+  }
 }
