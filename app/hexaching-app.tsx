@@ -22,11 +22,11 @@ export default function HexaChingApp() {
   const [lines, setLines] = useState<string[]>(Array(6).fill(""));
 
   const parsedLines = parseLinesTopToBottom(lines);
-  const presentResult = parsedLines ? calculatePresentInterpretation(parsedLines) : null;
-  const resultingResult = parsedLines ? calculateResultingInterpretation(parsedLines) : null;
-  const presentReading = presentResult ? getHexagramReading(presentResult.hexagramNumber) : null;
-  const resultingReading = resultingResult
-    ? getHexagramReading(resultingResult.hexagramNumber)
+  const primaryResult = parsedLines ? calculatePresentInterpretation(parsedLines) : null;
+  const relatingResult = parsedLines ? calculateResultingInterpretation(parsedLines) : null;
+  const primaryReading = primaryResult ? getHexagramReading(primaryResult.hexagramNumber) : null;
+  const relatingReading = relatingResult
+    ? getHexagramReading(relatingResult.hexagramNumber)
     : null;
 
   return (
@@ -44,8 +44,9 @@ export default function HexaChingApp() {
                 </h1>
                 <p className="max-w-2xl text-base leading-7 text-slate-200 sm:text-lg">
                   Enter six line values from top to bottom using 6, 7, 8, or 9. The app
-                  calculates the primary hexagram, reads its Judgement and Image, then
-                  inverts the moving lines to reveal the resulting Lines.
+                  calculates the primary hexagram, shows its judgement and image, then
+                  inverts the moving lines to reveal the relating hexagram and its matching
+                  moving-line texts.
                 </p>
               </div>
             </div>
@@ -97,8 +98,8 @@ export default function HexaChingApp() {
               </div>
               <ol className="space-y-3 text-sm leading-6 text-stone-700">
                 <li>Enter six values using only 6, 7, 8, or 9.</li>
-                <li>Present shows the primary hexagram and its core text.</li>
-                <li>Moving lines are inverted to reveal the resulting hexagram and its lines.</li>
+                <li>Primary shows the first hexagram produced by the cast.</li>
+                <li>Relating shows the secondary hexagram produced by inverting moving lines.</li>
               </ol>
               <div className="rounded-3xl bg-stone-950 px-5 py-4 text-sm leading-6 text-stone-300">
                 The calculation uses the traditional bottom-to-top line order internally even
@@ -109,30 +110,37 @@ export default function HexaChingApp() {
 
           <section className="rounded-[28px] border border-stone-200/70 bg-white/85 p-6 shadow-[0_20px_80px_rgba(148,163,184,0.14)] backdrop-blur">
             <div className="flex flex-col gap-5">
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.3em] text-stone-500">
-                    Interpretation
-                  </p>
-                  <h2 className="mt-2 text-2xl font-semibold tracking-tight text-stone-900">
-                    {presentResult ? "Hexagram Match" : "Awaiting Complete Cast"}
-                  </h2>
-                </div>
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-stone-500">
+                  Interpretation
+                </p>
+                <h2 className="mt-2 text-2xl font-semibold tracking-tight text-stone-900">
+                  {primaryResult ? "Hexagram Match" : "Awaiting Complete Cast"}
+                </h2>
               </div>
 
-              {presentResult ? (
+              {primaryResult ? (
                 <>
-                  <ResultCard result={presentResult} />
-                  <CompactSummary
-                    title="Present"
-                    subtitle="Primary hexagram from your cast"
-                    result={presentResult}
-                  />
+                  <ResultCard result={primaryResult} relatingResult={relatingResult} />
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <CompactSummary
+                      title="Primary Rune"
+                      subtitle="Primary hexagram from your cast"
+                      result={primaryResult}
+                    />
+                    {relatingResult && (
+                      <CompactSummary
+                        title="Relating Rune"
+                        subtitle="Secondary hexagram from inverted moving lines"
+                        result={relatingResult}
+                      />
+                    )}
+                  </div>
                   <ReadingPanels
-                    presentResult={presentResult}
-                    resultingResult={resultingResult}
-                    presentReading={presentReading}
-                    resultingReading={resultingReading}
+                    primaryResult={primaryResult}
+                    relatingResult={relatingResult}
+                    primaryReading={primaryReading}
+                    relatingReading={relatingReading}
                   />
                 </>
               ) : (
@@ -141,8 +149,8 @@ export default function HexaChingApp() {
                     Fill all six boxes to reveal the matching hexagram.
                   </p>
                   <p className="mt-2 text-sm leading-6 text-stone-600">
-                    Once the cast is complete, the app will show the primary reading and the
-                    resulting lines.
+                    Once the cast is complete, the app will show the primary and relating
+                    readings.
                   </p>
                 </div>
               )}
@@ -184,7 +192,13 @@ function LineInput({
   );
 }
 
-function ResultCard({ result }: { result: InterpretationResult }) {
+function ResultCard({
+  result,
+  relatingResult,
+}: {
+  result: InterpretationResult;
+  relatingResult: InterpretationResult | null;
+}) {
   return (
     <div className="rounded-[30px] bg-[linear-gradient(180deg,_#fffdf8,_#f7f4ea)] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] sm:p-6">
       <div className="grid gap-6 sm:grid-cols-[140px_1fr] sm:items-center">
@@ -193,7 +207,7 @@ function ResultCard({ result }: { result: InterpretationResult }) {
         </div>
         <div className="space-y-3">
           <p className="text-xs font-semibold uppercase tracking-[0.28em] text-amber-700">
-            Present Hexagram
+            Primary Hexagram
           </p>
           <div>
             <h3 className="text-3xl font-semibold tracking-tight text-stone-950">
@@ -206,6 +220,11 @@ function ResultCard({ result }: { result: InterpretationResult }) {
               ? `Moving lines: ${result.movingLines.join(", ")}`
               : "No moving lines in this cast."}
           </p>
+          {relatingResult && (
+            <p className="text-sm leading-6 text-stone-700">
+              Relating rune: Hexagram {relatingResult.hexagramNumber} {relatingResult.hexagramName}
+            </p>
+          )}
         </div>
       </div>
     </div>
@@ -213,46 +232,80 @@ function ResultCard({ result }: { result: InterpretationResult }) {
 }
 
 function ReadingPanels({
-  presentResult,
-  resultingResult,
-  presentReading,
-  resultingReading,
+  primaryResult,
+  relatingResult,
+  primaryReading,
+  relatingReading,
 }: {
-  presentResult: InterpretationResult | null;
-  resultingResult: InterpretationResult | null;
-  presentReading: ReturnType<typeof getHexagramReading>;
-  resultingReading: ReturnType<typeof getHexagramReading>;
+  primaryResult: InterpretationResult | null;
+  relatingResult: InterpretationResult | null;
+  primaryReading: ReturnType<typeof getHexagramReading>;
+  relatingReading: ReturnType<typeof getHexagramReading>;
 }) {
-  if (!presentResult || !resultingResult || !presentReading || !resultingReading) {
+  if (!primaryResult || !relatingResult || !primaryReading || !relatingReading) {
     return null;
   }
 
   return (
     <div className="grid gap-4">
-      <ReadingCard
-        eyebrow="Primary Reading"
-        title={presentReading.title}
-        subtitle="The Judgement"
-        paragraphs={presentReading.judgement?.paragraphs ?? []}
-      />
-      <ReadingCard
-        eyebrow="Primary Reading"
-        title={presentReading.title}
-        subtitle="The Image"
-        paragraphs={presentReading.image?.paragraphs ?? []}
-      />
-      <ReadingCard
-        eyebrow="Primary Reading"
-        title={presentReading.title}
-        subtitle="The Wisdom of Hexagram"
-        paragraphs={presentReading.wisdom?.paragraphs ?? []}
+      <PrimaryHexagramCard
+        title={primaryReading.title}
+        judgement={primaryReading.judgement?.paragraphs ?? []}
+        image={primaryReading.image?.paragraphs ?? []}
       />
       <LinesCard
-        title={resultingReading.title}
-        movingLines={presentResult.movingLines}
-        sameHexagram={presentResult.hexagramNumber === resultingResult.hexagramNumber}
-        lines={pickRelevantLines(resultingReading.lines, presentResult.movingLines)}
+        title={relatingReading.title}
+        movingLines={primaryResult.movingLines}
+        sameHexagram={primaryResult.hexagramNumber === relatingResult.hexagramNumber}
+        lines={pickRelevantLines(relatingReading.lines, primaryResult.movingLines)}
       />
+      <ReadingCard
+        eyebrow="Relating Hexagram"
+        title={relatingReading.title}
+        subtitle="The Judgement"
+        paragraphs={relatingReading.judgement?.paragraphs ?? []}
+      />
+    </div>
+  );
+}
+
+function PrimaryHexagramCard({
+  title,
+  judgement,
+  image,
+}: {
+  title: string;
+  judgement: string[];
+  image: string[];
+}) {
+  return (
+    <div className="rounded-[24px] border border-stone-200 bg-stone-50/90 p-5">
+      <p className="text-xs font-semibold uppercase tracking-[0.28em] text-stone-500">
+        Primary Hexagram
+      </p>
+      <h3 className="mt-2 text-xl font-semibold tracking-tight text-stone-950">{title}</h3>
+      <div className="mt-5 grid gap-5 lg:grid-cols-2">
+        <div>
+          <h4 className="text-sm font-semibold uppercase tracking-[0.18em] text-stone-900">
+            The Judgement
+          </h4>
+          <div className="mt-3 space-y-3 text-sm leading-7 text-stone-700">
+            {judgement.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
+        </div>
+        <div>
+          <h4 className="text-sm font-semibold uppercase tracking-[0.18em] text-stone-900">
+            The Image
+          </h4>
+          <div className="mt-3 space-y-3 text-sm leading-7 text-stone-700">
+            {image.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -302,29 +355,31 @@ function LinesCard({
       <p className="mt-1 text-sm text-amber-900">{title}</p>
       <p className="mt-3 text-sm leading-6 text-stone-700">
         {movingLines.length > 0
-          ? `Moving lines ${movingLines.join(", ")} were inverted to form the resulting hexagram.`
+          ? `Moving lines ${movingLines.join(", ")} were inverted to form the relating rune.`
           : sameHexagram
-            ? "No moving lines were cast, so the resulting hexagram remains the same."
-            : "The resulting hexagram was derived by inverting the moving lines."}
+            ? "No moving lines were cast, so the relating rune remains the same."
+            : "The relating rune was derived by inverting the moving lines."}
       </p>
       <div className="mt-5 space-y-5">
-        {lines.length > 0 ? lines.map((line) => (
-          <section
-            key={line.heading}
-            className="rounded-2xl bg-white px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]"
-          >
-            <h4 className="text-sm font-semibold uppercase tracking-[0.18em] text-stone-900">
-              {line.heading}
-            </h4>
-            <div className="mt-3 space-y-3 text-sm leading-7 text-stone-700">
-              {line.paragraphs.map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
-              ))}
-            </div>
-          </section>
-        )) : (
+        {lines.length > 0 ? (
+          lines.map((line) => (
+            <section
+              key={line.heading}
+              className="rounded-2xl bg-white px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]"
+            >
+              <h4 className="text-sm font-semibold uppercase tracking-[0.18em] text-stone-900">
+                {line.heading}
+              </h4>
+              <div className="mt-3 space-y-3 text-sm leading-7 text-stone-700">
+                {line.paragraphs.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+              </div>
+            </section>
+          ))
+        ) : (
           <div className="rounded-2xl bg-white px-4 py-4 text-sm leading-7 text-stone-700 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]">
-            No moving lines were selected, so there are no resulting line texts to display.
+            No moving lines were selected, so there are no relating line texts to display.
           </div>
         )}
       </div>
