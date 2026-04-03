@@ -241,6 +241,12 @@ function ReadingPanels({
         subtitle="The Image"
         paragraphs={presentReading.image?.paragraphs ?? []}
       />
+      <ReadingCard
+        eyebrow="Primary Reading"
+        title={presentReading.title}
+        subtitle="The Wisdom of Hexagram"
+        paragraphs={presentReading.wisdom?.paragraphs ?? []}
+      />
       <LinesCard
         title={resultingReading.title}
         movingLines={presentResult.movingLines}
@@ -290,9 +296,9 @@ function LinesCard({
   return (
     <div className="rounded-[24px] border border-stone-200 bg-stone-50/90 p-5">
       <p className="text-xs font-semibold uppercase tracking-[0.28em] text-stone-500">
-        Resulting Hexagram
+        Moving Lines
       </p>
-      <h3 className="mt-2 text-xl font-semibold tracking-tight text-stone-950">The Lines</h3>
+      <h3 className="mt-2 text-xl font-semibold tracking-tight text-stone-950">Moving Lines</h3>
       <p className="mt-1 text-sm text-amber-900">{title}</p>
       <p className="mt-3 text-sm leading-6 text-stone-700">
         {movingLines.length > 0

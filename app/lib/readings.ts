@@ -24,6 +24,7 @@ export type HexagramReading = {
   subtitle: string;
   judgement: ReadingSection | null;
   image: ReadingSection | null;
+  wisdom: ReadingSection | null;
   lines: ReadingSection[];
 };
 
@@ -36,6 +37,7 @@ const readingMap = new Map<number, HexagramReading>(
       subtitle: entry.subtitle,
       judgement: findSection(entry.sections, "The Judgement"),
       image: findSection(entry.sections, "The Image"),
+      wisdom: findWisdomSection(entry.sections),
       lines: entry.sections
         .filter((section) => section.level === 3)
         .map((section) => ({
@@ -52,6 +54,22 @@ export function getHexagramReading(number: number): HexagramReading | null {
 
 function findSection(sections: RawSection[], heading: string): ReadingSection | null {
   const section = sections.find((entry) => entry.heading === heading);
+  if (!section) {
+    return null;
+  }
+
+  return {
+    heading: section.heading,
+    paragraphs: section.content,
+  };
+}
+
+function findWisdomSection(sections: RawSection[]): ReadingSection | null {
+  const excluded = new Set(["Intro", "The Judgement", "The Image", "Structural Relatives"]);
+  const section = sections.find(
+    (entry) => entry.level === 2 && !excluded.has(entry.heading),
+  );
+
   if (!section) {
     return null;
   }
