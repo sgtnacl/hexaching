@@ -1,5 +1,6 @@
 import hexagrams from "./hexagrams_full.json";
 import hatcherExtras from "./hatcher_extras.json";
+import tarotWriteups from "./tarot_writeups.json";
 
 type RawSection = {
   heading: string;
@@ -19,6 +20,11 @@ type HatcherEntry = {
   quotations: string[];
 };
 
+type TarotEntry = {
+  cardName: string;
+  writeup: string;
+};
+
 export type ReadingSection = {
   heading: string;
   paragraphs: string[];
@@ -34,13 +40,16 @@ export type HexagramReading = {
   lines: ReadingSection[];
   waiGuang: string[];
   quotations: string[];
+  tarotWriteup: TarotEntry | null;
 };
 
 const extrasMap = hatcherExtras as Record<string, HatcherEntry>;
+const tarotMap = tarotWriteups as Record<string, TarotEntry>;
 
 const readingMap = new Map<number, HexagramReading>(
   (hexagrams as RawHexagram[]).map((entry) => {
     const extras = extrasMap[String(entry.number)] ?? { waiGuang: [], quotations: [] };
+    const tarot = tarotMap[String(entry.number)] ?? null;
     return [
       entry.number,
       {
@@ -58,6 +67,7 @@ const readingMap = new Map<number, HexagramReading>(
           })),
         waiGuang: extras.waiGuang,
         quotations: extras.quotations,
+        tarotWriteup: tarot,
       },
     ];
   }),
