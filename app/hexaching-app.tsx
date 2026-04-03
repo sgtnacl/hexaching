@@ -3,8 +3,8 @@
 import { useState } from "react";
 import type { InterpretationResult } from "./lib/iching";
 import {
-  calculateFutureInterpretation,
   calculatePresentInterpretation,
+  calculateResultingInterpretation,
   parseLinesTopToBottom,
 } from "./lib/iching";
 import { getHexagramReading } from "./lib/readings";
@@ -23,9 +23,11 @@ export default function HexaChingApp() {
 
   const parsedLines = parseLinesTopToBottom(lines);
   const presentResult = parsedLines ? calculatePresentInterpretation(parsedLines) : null;
-  const futureResult = parsedLines ? calculateFutureInterpretation(parsedLines) : null;
+  const resultingResult = parsedLines ? calculateResultingInterpretation(parsedLines) : null;
   const presentReading = presentResult ? getHexagramReading(presentResult.hexagramNumber) : null;
-  const futureReading = futureResult ? getHexagramReading(futureResult.hexagramNumber) : null;
+  const resultingReading = resultingResult
+    ? getHexagramReading(resultingResult.hexagramNumber)
+    : null;
 
   return (
     <main className="min-h-screen px-4 py-8 sm:px-6 lg:px-8">
@@ -128,9 +130,9 @@ export default function HexaChingApp() {
                   />
                   <ReadingPanels
                     presentResult={presentResult}
-                    futureResult={futureResult}
+                    resultingResult={resultingResult}
                     presentReading={presentReading}
-                    futureReading={futureReading}
+                    resultingReading={resultingReading}
                   />
                 </>
               ) : (
@@ -212,16 +214,16 @@ function ResultCard({ result }: { result: InterpretationResult }) {
 
 function ReadingPanels({
   presentResult,
-  futureResult,
+  resultingResult,
   presentReading,
-  futureReading,
+  resultingReading,
 }: {
   presentResult: InterpretationResult | null;
-  futureResult: InterpretationResult | null;
+  resultingResult: InterpretationResult | null;
   presentReading: ReturnType<typeof getHexagramReading>;
-  futureReading: ReturnType<typeof getHexagramReading>;
+  resultingReading: ReturnType<typeof getHexagramReading>;
 }) {
-  if (!presentResult || !futureResult || !presentReading || !futureReading) {
+  if (!presentResult || !resultingResult || !presentReading || !resultingReading) {
     return null;
   }
 
@@ -240,10 +242,10 @@ function ReadingPanels({
         paragraphs={presentReading.image?.paragraphs ?? []}
       />
       <LinesCard
-        title={futureReading.title}
+        title={resultingReading.title}
         movingLines={presentResult.movingLines}
-        sameHexagram={presentResult.hexagramNumber === futureResult.hexagramNumber}
-        lines={pickRelevantLines(futureReading.lines, presentResult.movingLines)}
+        sameHexagram={presentResult.hexagramNumber === resultingResult.hexagramNumber}
+        lines={pickRelevantLines(resultingReading.lines, presentResult.movingLines)}
       />
     </div>
   );

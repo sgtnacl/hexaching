@@ -1,7 +1,5 @@
 export type LineValue = 6 | 7 | 8 | 9;
 
-export type ViewMode = "present" | "future";
-
 export type InterpretationResult = {
   hexagramNumber: number;
   hexagramName: string;
@@ -109,25 +107,14 @@ export function calculatePresentInterpretation(linesTopToBottom: LineValue[]): I
   return calculateInterpretation(toBottomToTop(linesTopToBottom));
 }
 
-export function calculateFutureInterpretation(linesTopToBottom: LineValue[]): InterpretationResult {
-  const futureLines = toBottomToTop(linesTopToBottom).map((line) => {
+export function calculateResultingInterpretation(linesTopToBottom: LineValue[]): InterpretationResult {
+  const resultingLines = toBottomToTop(linesTopToBottom).map((line) => {
     if (line === 6) return 7;
     if (line === 9) return 8;
     return line;
   }) as LineValue[];
 
-  return calculateInterpretation(futureLines);
-}
-
-export function createInterpretUrl(result: InterpretationResult, mode: ViewMode): string {
-  if (mode === "future") {
-    return `https://castiching.com/interpret?hex=${result.hexagramNumber}`;
-  }
-
-  const movingParam =
-    result.movingLines.length > 0 ? `&moving=${result.movingLines.join(",")}` : "";
-
-  return `https://castiching.com/interpret?hex=${result.hexagramNumber}${movingParam}`;
+  return calculateInterpretation(resultingLines);
 }
 
 function toBottomToTop(linesTopToBottom: LineValue[]): LineValue[] {
