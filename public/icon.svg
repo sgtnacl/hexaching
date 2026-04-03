@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+  <rect width="192" height="192" rx="40" fill="#0d1117"/>
+  <!-- Line 6 (top): yang -->
+  <rect x="24" y="24" width="144" height="12" rx="6" fill="#f59e0b"/>
+  <!-- Line 5: yin -->
+  <rect x="24" y="50" width="63" height="12" rx="6" fill="#94a3b8"/>
+  <rect x="105" y="50" width="63" height="12" rx="6" fill="#94a3b8"/>
+  <!-- Line 4: yang -->
+  <rect x="24" y="76" width="144" height="12" rx="6" fill="#f59e0b"/>
+  <!-- Line 3: yang -->
+  <rect x="24" y="102" width="144" height="12" rx="6" fill="#f59e0b"/>
+  <!-- Line 2: yin -->
+  <rect x="24" y="128" width="63" height="12" rx="6" fill="#94a3b8"/>
+  <rect x="105" y="128" width="63" height="12" rx="6" fill="#94a3b8"/>
+  <!-- Line 1 (bottom): yang -->
+  <rect x="24" y="154" width="144" height="12" rx="6" fill="#f59e0b"/>
+</svg>
