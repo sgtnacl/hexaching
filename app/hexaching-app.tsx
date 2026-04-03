@@ -121,21 +121,7 @@ export default function HexaChingApp() {
 
               {primaryResult ? (
                 <>
-                  <ResultCard result={primaryResult} relatingResult={relatingResult} />
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <CompactSummary
-                      title="Primary Rune"
-                      subtitle="Primary hexagram from your cast"
-                      result={primaryResult}
-                    />
-                    {relatingResult && (
-                      <CompactSummary
-                        title="Relating Rune"
-                        subtitle="Secondary hexagram from inverted moving lines"
-                        result={relatingResult}
-                      />
-                    )}
-                  </div>
+                  <HexagramsBox primaryResult={primaryResult} relatingResult={relatingResult} />
                   <ReadingPanels
                     primaryResult={primaryResult}
                     relatingResult={relatingResult}
@@ -192,40 +178,42 @@ function LineInput({
   );
 }
 
-function ResultCard({
-  result,
+function HexagramsBox({
+  primaryResult,
   relatingResult,
 }: {
-  result: InterpretationResult;
+  primaryResult: InterpretationResult;
   relatingResult: InterpretationResult | null;
 }) {
   return (
     <div className="rounded-[30px] bg-[linear-gradient(180deg,_#fffdf8,_#f7f4ea)] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] sm:p-6">
-      <div className="grid gap-6 sm:grid-cols-[140px_1fr] sm:items-center">
-        <div className="rounded-[24px] bg-stone-950 px-5 py-6">
-          <HexagramDiagram lines={result.lines} />
-        </div>
-        <div className="space-y-3">
+      <div className="flex flex-col items-center gap-8">
+        <div className="flex flex-col items-center gap-3">
           <p className="text-xs font-semibold uppercase tracking-[0.28em] text-amber-700">
             Primary Hexagram
           </p>
-          <div>
-            <h3 className="text-3xl font-semibold tracking-tight text-stone-950">
-              Hexagram {result.hexagramNumber}
-            </h3>
-            <p className="mt-1 text-lg font-medium text-amber-900">{result.hexagramName}</p>
+          <div className="w-32 rounded-[24px] bg-stone-950 px-5 py-6">
+            <HexagramDiagram lines={primaryResult.lines} />
           </div>
-          <p className="text-sm leading-6 text-stone-700">
-            {result.movingLines.length > 0
-              ? `Moving lines: ${result.movingLines.join(", ")}`
-              : "No moving lines in this cast."}
+          <p className="text-xl font-semibold tracking-tight text-stone-950">
+            Hexagram {primaryResult.hexagramNumber}
           </p>
-          {relatingResult && (
-            <p className="text-sm leading-6 text-stone-700">
-              Relating rune: Hexagram {relatingResult.hexagramNumber} {relatingResult.hexagramName}
-            </p>
-          )}
+          <p className="text-sm font-medium text-amber-900">{primaryResult.hexagramName}</p>
         </div>
+        {relatingResult && (
+          <div className="flex flex-col items-center gap-3">
+            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-amber-700">
+              Relating Hexagram
+            </p>
+            <div className="w-32 rounded-[24px] bg-stone-950 px-5 py-6">
+              <HexagramDiagram lines={relatingResult.lines} />
+            </div>
+            <p className="text-xl font-semibold tracking-tight text-stone-950">
+              Hexagram {relatingResult.hexagramNumber}
+            </p>
+            <p className="text-sm font-medium text-amber-900">{relatingResult.hexagramName}</p>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -259,11 +247,9 @@ function ReadingPanels({
         sameHexagram={primaryResult.hexagramNumber === relatingResult.hexagramNumber}
         lines={pickRelevantLines(relatingReading.lines, primaryResult.movingLines)}
       />
-      <ReadingCard
-        eyebrow="Relating Hexagram"
-        title={relatingReading.title}
-        subtitle="The Judgement"
-        paragraphs={relatingReading.judgement?.paragraphs ?? []}
+      <RelatingHexagramCard
+        result={relatingResult}
+        reading={relatingReading}
       />
     </div>
   );
@@ -310,26 +296,37 @@ function PrimaryHexagramCard({
   );
 }
 
-function ReadingCard({
-  eyebrow,
-  title,
-  subtitle,
-  paragraphs,
+function RelatingHexagramCard({
+  result,
+  reading,
 }: {
-  eyebrow: string;
-  title: string;
-  subtitle: string;
-  paragraphs: string[];
+  result: InterpretationResult;
+  reading: ReturnType<typeof getHexagramReading>;
 }) {
+  if (!reading) return null;
   return (
     <div className="rounded-[24px] border border-stone-200 bg-stone-50/90 p-5">
-      <p className="text-xs font-semibold uppercase tracking-[0.28em] text-stone-500">{eyebrow}</p>
-      <h3 className="mt-2 text-xl font-semibold tracking-tight text-stone-950">{subtitle}</h3>
-      <p className="mt-1 text-sm text-amber-900">{title}</p>
-      <div className="mt-4 space-y-3 text-sm leading-7 text-stone-700">
-        {paragraphs.map((paragraph) => (
-          <p key={paragraph}>{paragraph}</p>
-        ))}
+      <p className="text-xs font-semibold uppercase tracking-[0.28em] text-stone-500">
+        Relating Hexagram
+      </p>
+      <div className="mt-4 grid gap-6 sm:grid-cols-[120px_1fr] sm:items-start">
+        <div className="w-32 rounded-[24px] bg-stone-950 px-5 py-6">
+          <HexagramDiagram lines={result.lines} />
+        </div>
+        <div>
+          <h3 className="text-xl font-semibold tracking-tight text-stone-950">
+            Hexagram {result.hexagramNumber}
+          </h3>
+          <p className="mt-1 text-sm text-amber-900">{reading.title}</p>
+          <h4 className="mt-4 text-sm font-semibold uppercase tracking-[0.18em] text-stone-900">
+            The Judgement
+          </h4>
+          <div className="mt-3 space-y-3 text-sm leading-7 text-stone-700">
+            {(reading.judgement?.paragraphs ?? []).map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -412,26 +409,6 @@ function HexagramDiagram({ lines }: { lines: InterpretationResult["lines"] }) {
   );
 }
 
-function CompactSummary({
-  title,
-  subtitle,
-  result,
-}: {
-  title: string;
-  subtitle: string;
-  result: InterpretationResult;
-}) {
-  return (
-    <div className="rounded-[24px] border border-amber-300 bg-amber-50 p-4 transition">
-      <p className="text-sm font-semibold text-stone-900">{title}</p>
-      <p className="mt-1 text-xs leading-5 text-stone-600">{subtitle}</p>
-      <p className="mt-4 text-2xl font-semibold tracking-tight text-stone-950">
-        {result.hexagramNumber}
-      </p>
-      <p className="mt-1 text-sm text-stone-700">{result.hexagramName}</p>
-    </div>
-  );
-}
 
 function pickRelevantLines(
   lines: { heading: string; paragraphs: string[] }[],

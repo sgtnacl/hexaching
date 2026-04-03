@@ -1,0 +1,518 @@
+{
+  "source_index": "https://castiching.com/hexagrams",
+  "hexagram_count": 64,
+  "entries": [
+    {
+      "number": 1,
+      "name": "Creative",
+      "url": "https://castiching.com/hexagrams/1-creative",
+      "slug": "1-creative",
+      "title": "Hexagram 1 . THE CREATIVE",
+      "subtitle": "Ch'ien"
+    },
+    {
+      "number": 2,
+      "name": "Receptive",
+      "url": "https://castiching.com/hexagrams/2-receptive",
+      "slug": "2-receptive",
+      "title": "Hexagram 2 . THE RECEPTIVE",
+      "subtitle": "K'un"
+    },
+    {
+      "number": 3,
+      "name": "Difficulty",
+      "url": "https://castiching.com/hexagrams/3-difficulty-at-the-beginning",
+      "slug": "3-difficulty-at-the-beginning",
+      "title": "Hexagram 3 . DIFFICULTY AT THE BEGINNING",
+      "subtitle": "Chun"
+    },
+    {
+      "number": 4,
+      "name": "Folly",
+      "url": "https://castiching.com/hexagrams/4-youthful-folly",
+      "slug": "4-youthful-folly",
+      "title": "Hexagram 4 . YOUTHFUL FOLLY",
+      "subtitle": "Mêng"
+    },
+    {
+      "number": 5,
+      "name": "Waiting",
+      "url": "https://castiching.com/hexagrams/5-waiting-nourishment",
+      "slug": "5-waiting-nourishment",
+      "title": "Hexagram 5 . WAITING (NOURISHMENT)",
+      "subtitle": "Hsu"
+    },
+    {
+      "number": 6,
+      "name": "Conflict",
+      "url": "https://castiching.com/hexagrams/6-conflict",
+      "slug": "6-conflict",
+      "title": "Hexagram 6 . CONFLICT",
+      "subtitle": "Sung"
+    },
+    {
+      "number": 7,
+      "name": "Army",
+      "url": "https://castiching.com/hexagrams/7-army",
+      "slug": "7-army",
+      "title": "Hexagram 7 . THE ARMY",
+      "subtitle": "Shih"
+    },
+    {
+      "number": 8,
+      "name": "Union",
+      "url": "https://castiching.com/hexagrams/8-holding-together-union",
+      "slug": "8-holding-together-union",
+      "title": "Hexagram 8 . HOLDING TOGETHER (UNION)",
+      "subtitle": "Pi"
+    },
+    {
+      "number": 9,
+      "name": "Taming",
+      "url": "https://castiching.com/hexagrams/9-taming-power-of-the-small",
+      "slug": "9-taming-power-of-the-small",
+      "title": "Hexagram 9 . THE TAMING POWER OF THE SMALL",
+      "subtitle": "Hsiao Ch'u"
+    },
+    {
+      "number": 10,
+      "name": "Treading",
+      "url": "https://castiching.com/hexagrams/10-treading-conduct",
+      "slug": "10-treading-conduct",
+      "title": "Hexagram 10 . TREADING (CONDUCT)",
+      "subtitle": "Lu"
+    },
+    {
+      "number": 11,
+      "name": "Peace",
+      "url": "https://castiching.com/hexagrams/11-peace",
+      "slug": "11-peace",
+      "title": "Hexagram 11 . PEACE",
+      "subtitle": "T'ai"
+    },
+    {
+      "number": 12,
+      "name": "Standstill",
+      "url": "https://castiching.com/hexagrams/12-standstill-stagnation",
+      "slug": "12-standstill-stagnation",
+      "title": "Hexagram 12 . STANDSTILL (STAGNATION)",
+      "subtitle": "P'i"
+    },
+    {
+      "number": 13,
+      "name": "Fellowship",
+      "url": "https://castiching.com/hexagrams/13-fellowship-with-men",
+      "slug": "13-fellowship-with-men",
+      "title": "Hexagram 13 . FELLOWSHIP WITH MEN",
+      "subtitle": "T'ung Jên"
+    },
+    {
+      "number": 14,
+      "name": "Possession",
+      "url": "https://castiching.com/hexagrams/14-possession-in-great-measure",
+      "slug": "14-possession-in-great-measure",
+      "title": "Hexagram 14 . POSSESSION IN GREAT MEASURE",
+      "subtitle": "Ta Yu"
+    },
+    {
+      "number": 15,
+      "name": "Modesty",
+      "url": "https://castiching.com/hexagrams/15-modesty",
+      "slug": "15-modesty",
+      "title": "Hexagram 15 . MODESTY",
+      "subtitle": "Ch'ien"
+    },
+    {
+      "number": 16,
+      "name": "Enthusiasm",
+      "url": "https://castiching.com/hexagrams/16-enthusiasm",
+      "slug": "16-enthusiasm",
+      "title": "Hexagram 16 . ENTHUSIASM",
+      "subtitle": "Yu"
+    },
+    {
+      "number": 17,
+      "name": "Following",
+      "url": "https://castiching.com/hexagrams/17-following",
+      "slug": "17-following",
+      "title": "Hexagram 17 . FOLLOWING",
+      "subtitle": "Sui"
+    },
+    {
+      "number": 18,
+      "name": "Decay",
+      "url": "https://castiching.com/hexagrams/18-work-on-what-has-been-spoiled-decay",
+      "slug": "18-work-on-what-has-been-spoiled-decay",
+      "title": "Hexagram 18 . WORK ON WHAT HAS BEEN SPOILED (DECAY)",
+      "subtitle": "Ku"
+    },
+    {
+      "number": 19,
+      "name": "Approach",
+      "url": "https://castiching.com/hexagrams/19-approach",
+      "slug": "19-approach",
+      "title": "Hexagram 19 . APPROACH",
+      "subtitle": "Lin"
+    },
+    {
+      "number": 20,
+      "name": "View",
+      "url": "https://castiching.com/hexagrams/20-contemplation-view",
+      "slug": "20-contemplation-view",
+      "title": "Hexagram 20 . CONTEMPLATION (VIEW)",
+      "subtitle": "Kuan"
+    },
+    {
+      "number": 21,
+      "name": "Biting",
+      "url": "https://castiching.com/hexagrams/21-biting-through",
+      "slug": "21-biting-through",
+      "title": "Hexagram 21 . BITING THROUGH",
+      "subtitle": "Shih Ho"
+    },
+    {
+      "number": 22,
+      "name": "Grace",
+      "url": "https://castiching.com/hexagrams/22-grace",
+      "slug": "22-grace",
+      "title": "Hexagram 22 . GRACE",
+      "subtitle": "Pi"
+    },
+    {
+      "number": 23,
+      "name": "Splitting",
+      "url": "https://castiching.com/hexagrams/23-splitting-apart",
+      "slug": "23-splitting-apart",
+      "title": "Hexagram 23 . SPLITTING APART",
+      "subtitle": "Po"
+    },
+    {
+      "number": 24,
+      "name": "Return",
+      "url": "https://castiching.com/hexagrams/24-return-the-turning-point",
+      "slug": "24-return-the-turning-point",
+      "title": "Hexagram 24 . RETURN (THE TURNING POINT)",
+      "subtitle": "Fu"
+    },
+    {
+      "number": 25,
+      "name": "Innocence",
+      "url": "https://castiching.com/hexagrams/25-innocence-the-unexpected",
+      "slug": "25-innocence-the-unexpected",
+      "title": "Hexagram 25 . INNOCENCE (THE UNEXPECTED)",
+      "subtitle": "Wu Wang"
+    },
+    {
+      "number": 26,
+      "name": "Taming",
+      "url": "https://castiching.com/hexagrams/26-taming-power-of-the-great",
+      "slug": "26-taming-power-of-the-great",
+      "title": "Hexagram 26 . THE TAMING POWER OF THE GREAT",
+      "subtitle": "Ta Ch'u"
+    },
+    {
+      "number": 27,
+      "name": "Mouth",
+      "url": "https://castiching.com/hexagrams/27-corners-of-the-mouth-providing-nourishment",
+      "slug": "27-corners-of-the-mouth-providing-nourishment",
+      "title": "Hexagram 27 . THE CORNERS OF THE MOUTH (PROVIDING NOURISHMENT)",
+      "subtitle": "I"
+    },
+    {
+      "number": 28,
+      "name": "Preponderance",
+      "url": "https://castiching.com/hexagrams/28-preponderance-of-the-great",
+      "slug": "28-preponderance-of-the-great",
+      "title": "Hexagram 28 . PREPONDERANCE OF THE GREAT",
+      "subtitle": "Ta Kuo"
+    },
+    {
+      "number": 29,
+      "name": "Abysmal",
+      "url": "https://castiching.com/hexagrams/29-abysmal-water",
+      "slug": "29-abysmal-water",
+      "title": "Hexagram 29 . THE ABYSMAL (WATER)",
+      "subtitle": "K'an"
+    },
+    {
+      "number": 30,
+      "name": "Clinging",
+      "url": "https://castiching.com/hexagrams/30-clinging-fire",
+      "slug": "30-clinging-fire",
+      "title": "Hexagram 30 . THE CLINGING, FIRE",
+      "subtitle": "Li"
+    },
+    {
+      "number": 31,
+      "name": "Influence",
+      "url": "https://castiching.com/hexagrams/31-influence-wooing",
+      "slug": "31-influence-wooing",
+      "title": "Hexagram 31 . INFLUENCE (WOOING)",
+      "subtitle": "Hsien"
+    },
+    {
+      "number": 32,
+      "name": "Duration",
+      "url": "https://castiching.com/hexagrams/32-duration",
+      "slug": "32-duration",
+      "title": "Hexagram 32 . DURATION",
+      "subtitle": "Hêng"
+    },
+    {
+      "number": 33,
+      "name": "Retreat",
+      "url": "https://castiching.com/hexagrams/33-retreat",
+      "slug": "33-retreat",
+      "title": "Hexagram 33 . RETREAT",
+      "subtitle": "Tun"
+    },
+    {
+      "number": 34,
+      "name": "Power",
+      "url": "https://castiching.com/hexagrams/34-power-of-the-great",
+      "slug": "34-power-of-the-great",
+      "title": "Hexagram 34 . THE POWER OF THE GREAT",
+      "subtitle": "Ta Chuang"
+    },
+    {
+      "number": 35,
+      "name": "Progress",
+      "url": "https://castiching.com/hexagrams/35-progress",
+      "slug": "35-progress",
+      "title": "Hexagram 35 . PROGRESS",
+      "subtitle": "Chin"
+    },
+    {
+      "number": 36,
+      "name": "Darkening",
+      "url": "https://castiching.com/hexagrams/36-darkening-of-the-light",
+      "slug": "36-darkening-of-the-light",
+      "title": "Hexagram 36 . DARKENING OF THE LIGHT",
+      "subtitle": "Ming I"
+    },
+    {
+      "number": 37,
+      "name": "Family",
+      "url": "https://castiching.com/hexagrams/37-family-the-clan",
+      "slug": "37-family-the-clan",
+      "title": "Hexagram 37 . THE FAMILY (THE CLAN)",
+      "subtitle": "Chia Jên"
+    },
+    {
+      "number": 38,
+      "name": "Opposition",
+      "url": "https://castiching.com/hexagrams/38-opposition",
+      "slug": "38-opposition",
+      "title": "Hexagram 38 . OPPOSITION",
+      "subtitle": "K'uei"
+    },
+    {
+      "number": 39,
+      "name": "Obstruction",
+      "url": "https://castiching.com/hexagrams/39-obstruction",
+      "slug": "39-obstruction",
+      "title": "Hexagram 39 . OBSTRUCTION",
+      "subtitle": "Chien"
+    },
+    {
+      "number": 40,
+      "name": "Deliverance",
+      "url": "https://castiching.com/hexagrams/40-deliverance",
+      "slug": "40-deliverance",
+      "title": "Hexagram 40 . DELIVERANCE",
+      "subtitle": "Hsieh"
+    },
+    {
+      "number": 41,
+      "name": "Decrease",
+      "url": "https://castiching.com/hexagrams/41-decrease",
+      "slug": "41-decrease",
+      "title": "Hexagram 41 . DECREASE",
+      "subtitle": "Sun"
+    },
+    {
+      "number": 42,
+      "name": "Increase",
+      "url": "https://castiching.com/hexagrams/42-increase",
+      "slug": "42-increase",
+      "title": "Hexagram 42 . INCREASE",
+      "subtitle": "I"
+    },
+    {
+      "number": 43,
+      "name": "Resoluteness",
+      "url": "https://castiching.com/hexagrams/43-break-through-resoluteness",
+      "slug": "43-break-through-resoluteness",
+      "title": "Hexagram 43 . BREAK-THROUGH (RESOLUTENESS)",
+      "subtitle": "Kuai"
+    },
+    {
+      "number": 44,
+      "name": "Coming",
+      "url": "https://castiching.com/hexagrams/44-coming-to-meet",
+      "slug": "44-coming-to-meet",
+      "title": "Hexagram 44 . COMING TO MEET",
+      "subtitle": "Kou"
+    },
+    {
+      "number": 45,
+      "name": "Gathering",
+      "url": "https://castiching.com/hexagrams/45-gathering-together-massing",
+      "slug": "45-gathering-together-massing",
+      "title": "Hexagram 45 . GATHERING TOGETHER (MASSING)",
+      "subtitle": "Ts'ui"
+    },
+    {
+      "number": 46,
+      "name": "Pushing",
+      "url": "https://castiching.com/hexagrams/46-pushing-upward",
+      "slug": "46-pushing-upward",
+      "title": "Hexagram 46 . PUSHING UPWARD",
+      "subtitle": "Shêng"
+    },
+    {
+      "number": 47,
+      "name": "Oppression",
+      "url": "https://castiching.com/hexagrams/47-oppression-exhaustion",
+      "slug": "47-oppression-exhaustion",
+      "title": "Hexagram 47 . OPPRESSION (EXHAUSTION)",
+      "subtitle": "K'un"
+    },
+    {
+      "number": 48,
+      "name": "Well",
+      "url": "https://castiching.com/hexagrams/48-well",
+      "slug": "48-well",
+      "title": "Hexagram 48 . THE WELL",
+      "subtitle": "Ching"
+    },
+    {
+      "number": 49,
+      "name": "Revolution",
+      "url": "https://castiching.com/hexagrams/49-revolution-molting",
+      "slug": "49-revolution-molting",
+      "title": "Hexagram 49 . REVOLUTION (MOLTING)",
+      "subtitle": "Ko"
+    },
+    {
+      "number": 50,
+      "name": "Caldron",
+      "url": "https://castiching.com/hexagrams/50-caldron",
+      "slug": "50-caldron",
+      "title": "Hexagram 50 . THE CALDRON",
+      "subtitle": "Ting"
+    },
+    {
+      "number": 51,
+      "name": "Arousing",
+      "url": "https://castiching.com/hexagrams/51-arousing-shock-thunder",
+      "slug": "51-arousing-shock-thunder",
+      "title": "Hexagram 51 . THE AROUSING (SHOCK, THUNDER)",
+      "subtitle": "Chên"
+    },
+    {
+      "number": 52,
+      "name": "Still",
+      "url": "https://castiching.com/hexagrams/52-keeping-still-mountain",
+      "slug": "52-keeping-still-mountain",
+      "title": "Hexagram 52 . KEEPING STILL, MOUNTAIN",
+      "subtitle": "Kên"
+    },
+    {
+      "number": 53,
+      "name": "Development",
+      "url": "https://castiching.com/hexagrams/53-development-gradual-progress",
+      "slug": "53-development-gradual-progress",
+      "title": "Hexagram 53 . DEVELOPMENT (GRADUAL PROGRESS)",
+      "subtitle": "Chien"
+    },
+    {
+      "number": 54,
+      "name": "Marrying",
+      "url": "https://castiching.com/hexagrams/54-marrying-maiden",
+      "slug": "54-marrying-maiden",
+      "title": "Hexagram 54 . THE MARRYING MAIDEN",
+      "subtitle": "Kuei Mei"
+    },
+    {
+      "number": 55,
+      "name": "Abundance",
+      "url": "https://castiching.com/hexagrams/55-abundance-fullness",
+      "slug": "55-abundance-fullness",
+      "title": "Hexagram 55 . ABUNDANCE (FULLNESS)",
+      "subtitle": "Fêng"
+    },
+    {
+      "number": 56,
+      "name": "Wanderer",
+      "url": "https://castiching.com/hexagrams/56-wanderer",
+      "slug": "56-wanderer",
+      "title": "Hexagram 56 . THE WANDERER",
+      "subtitle": "Lu"
+    },
+    {
+      "number": 57,
+      "name": "Gentle",
+      "url": "https://castiching.com/hexagrams/57-gentle-the-penetrating-wind",
+      "slug": "57-gentle-the-penetrating-wind",
+      "title": "Hexagram 57 . THE GENTLE (THE PENETRATING, WIND)",
+      "subtitle": "Sun"
+    },
+    {
+      "number": 58,
+      "name": "Joyous",
+      "url": "https://castiching.com/hexagrams/58-joyous-lake",
+      "slug": "58-joyous-lake",
+      "title": "Hexagram 58 . THE JOYOUS, LAKE",
+      "subtitle": "Tui"
+    },
+    {
+      "number": 59,
+      "name": "Dispersion",
+      "url": "https://castiching.com/hexagrams/59-dispersion-dissolution",
+      "slug": "59-dispersion-dissolution",
+      "title": "Hexagram 59 . DISPERSION (DISSOLUTION)",
+      "subtitle": "Huan"
+    },
+    {
+      "number": 60,
+      "name": "Limitation",
+      "url": "https://castiching.com/hexagrams/60-limitation",
+      "slug": "60-limitation",
+      "title": "Hexagram 60 . LIMITATION",
+      "subtitle": "Chieh"
+    },
+    {
+      "number": 61,
+      "name": "Truth",
+      "url": "https://castiching.com/hexagrams/61-inner-truth",
+      "slug": "61-inner-truth",
+      "title": "Hexagram 61 . INNER TRUTH",
+      "subtitle": "Chung Fu"
+    },
+    {
+      "number": 62,
+      "name": "Small",
+      "url": "https://castiching.com/hexagrams/62-preponderance-of-the-small",
+      "slug": "62-preponderance-of-the-small",
+      "title": "Hexagram 62 . PREPONDERANCE OF THE SMALL",
+      "subtitle": "Hsiao Kuo"
+    },
+    {
+      "number": 63,
+      "name": "After",
+      "url": "https://castiching.com/hexagrams/63-after-completion",
+      "slug": "63-after-completion",
+      "title": "Hexagram 63 . AFTER COMPLETION",
+      "subtitle": "Chi Chi"
+    },
+    {
+      "number": 64,
+      "name": "Before",
+      "url": "https://castiching.com/hexagrams/64-before-completion",
+      "slug": "64-before-completion",
+      "title": "Hexagram 64 . BEFORE COMPLETION",
+      "subtitle": "Wei Chi"
+    }
+  ]
+}
