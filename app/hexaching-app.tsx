@@ -46,12 +46,6 @@ export default function HexaChingApp() {
                   lines.
                 </p>
               </div>
-              <div className="grid gap-3 text-sm text-slate-200 sm:grid-cols-3">
-                <LegendBadge label="6" description="Old Yin, moving" />
-                <LegendBadge label="7" description="Young Yang" />
-                <LegendBadge label="8" description="Young Yin" />
-                <LegendBadge label="9" description="Old Yang, moving" />
-              </div>
             </div>
 
             <div className="rounded-[28px] border border-white/10 bg-white/6 p-5 backdrop-blur-sm sm:p-6">
@@ -162,15 +156,6 @@ export default function HexaChingApp() {
         </section>
       </div>
     </main>
-  );
-}
-
-function LegendBadge({ label, description }: { label: string; description: string }) {
-  return (
-    <div className="rounded-2xl border border-white/10 bg-white/7 px-4 py-3">
-      <p className="text-sm font-semibold text-white">{label}</p>
-      <p className="mt-1 text-xs leading-5 text-slate-300">{description}</p>
-    </div>
   );
 }
 
