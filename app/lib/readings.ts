@@ -1,6 +1,7 @@
 import hexagrams from "./hexagrams_full.json";
 import hatcherExtras from "./hatcher_extras.json";
 import tarotWriteups from "./tarot_writeups.json";
+import qabalachWriteups from "./qabalah_writeups.json";
 
 type RawSection = {
   heading: string;
@@ -25,6 +26,10 @@ type TarotEntry = {
   writeup: string;
 };
 
+type QabalachEntry = {
+  writeup: string;
+};
+
 export type ReadingSection = {
   heading: string;
   paragraphs: string[];
@@ -41,15 +46,19 @@ export type HexagramReading = {
   waiGuang: string[];
   quotations: string[];
   tarotWriteup: TarotEntry | null;
+  qabalachWriteup: QabalachEntry | null;
 };
 
 const extrasMap = hatcherExtras as Record<string, HatcherEntry>;
 const tarotMap = tarotWriteups as Record<string, TarotEntry>;
+const qabalachMap = qabalachWriteups as Record<string, QabalachEntry>;
 
 const readingMap = new Map<number, HexagramReading>(
   (hexagrams as RawHexagram[]).map((entry) => {
     const extras = extrasMap[String(entry.number)] ?? { waiGuang: [], quotations: [] };
     const tarot = tarotMap[String(entry.number)] ?? null;
+    const cardName = tarot?.cardName ?? null;
+    const qabalah = cardName ? (qabalachMap[cardName] ?? null) : null;
     return [
       entry.number,
       {
@@ -68,6 +77,7 @@ const readingMap = new Map<number, HexagramReading>(
         waiGuang: extras.waiGuang,
         quotations: extras.quotations,
         tarotWriteup: tarot,
+        qabalachWriteup: qabalah,
       },
     ];
   }),

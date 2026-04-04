@@ -262,6 +262,7 @@ function ReadingPanels({
           title={primaryReading.title}
           items={primaryReading.waiGuang}
           tarotWriteup={primaryReading.tarotWriteup}
+          qabalachWriteup={primaryReading.qabalachWriteup}
         />
       )}
       {primaryReading.quotations.length > 0 && (
@@ -453,12 +454,15 @@ function WaiGuangCard({
   title,
   items,
   tarotWriteup,
+  qabalachWriteup,
 }: {
   title: string;
   items: string[];
   tarotWriteup: { cardName: string; writeup: string } | null;
+  qabalachWriteup: { writeup: string } | null;
 }) {
   const [tarotOpen, setTarotOpen] = useState(false);
+  const [qabalachOpen, setQabalachOpen] = useState(false);
 
   return (
     <div className="rounded-[24px] border border-slate-700/60 bg-slate-800/60 p-5">
@@ -472,6 +476,8 @@ function WaiGuangCard({
       <ul className="mt-4 space-y-2">
         {items.map((item) => {
           const isTarot = item.startsWith("Tarot");
+          const isQabalah = item.startsWith("Qabalah");
+
           if (isTarot && tarotWriteup) {
             return (
               <li key={item} className="flex flex-col gap-0">
@@ -505,6 +511,38 @@ function WaiGuangCard({
               </li>
             );
           }
+
+          if (isQabalah && qabalachWriteup) {
+            return (
+              <li key={item} className="flex flex-col gap-0">
+                <button
+                  type="button"
+                  onClick={() => setQabalachOpen((o) => !o)}
+                  className="flex w-full items-center justify-between gap-3 rounded-xl px-1 py-1 text-left transition hover:bg-white/5"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-400/70" />
+                    <span className="text-sm leading-6 text-slate-300">{item}</span>
+                  </div>
+                  <span className="text-xs text-slate-400">
+                    {qabalachOpen ? "▲ hide" : "▼ read more"}
+                  </span>
+                </button>
+                {qabalachOpen && (
+                  <div className="ml-[22px] mt-2 rounded-2xl bg-slate-700/50 px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
+                    <div className="space-y-3">
+                      {qabalachWriteup.writeup.split("\n\n").map((para, i) => (
+                        <p key={i} className="text-sm leading-7 text-slate-300">
+                          {para}
+                        </p>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </li>
+            );
+          }
+
           return (
             <li key={item} className="flex gap-3 text-sm leading-6 text-slate-300">
               <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-400/70" />
