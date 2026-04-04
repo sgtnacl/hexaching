@@ -43,7 +43,7 @@ export default function HexaChingApp() {
                   HexaChing
                 </h1>
                 <p className="max-w-2xl text-base leading-7 text-slate-200 sm:text-lg">
-                  Enter six line values from top to bottom using 6, 7, 8, or 9 to reveal your hexagram.
+                  Enter six line values from bottom to top using 6, 7, 8, or 9 to reveal your hexagram.
                 </p>
               </div>
             </div>
