@@ -43,10 +43,7 @@ export default function HexaChingApp() {
                   HexaChing
                 </h1>
                 <p className="max-w-2xl text-base leading-7 text-slate-200 sm:text-lg">
-                  Enter six line values from top to bottom using 6, 7, 8, or 9. The app
-                  calculates the primary hexagram, shows its judgement and image, then
-                  inverts the moving lines to reveal the relating hexagram and its matching
-                  moving-line texts.
+                  Enter six line values from top to bottom using 6, 7, 8, or 9 to reveal your hexagram.
                 </p>
               </div>
             </div>
