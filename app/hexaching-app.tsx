@@ -118,7 +118,7 @@ export default function HexaChingApp() {
 
               {primaryResult ? (
                 <>
-                  <HexagramsBox primaryResult={primaryResult} relatingResult={relatingResult} />
+                  <HexagramsBox primaryResult={primaryResult} relatingResult={primaryResult.movingLines.length > 0 ? relatingResult : null} />
                   <ReadingPanels
                     primaryResult={primaryResult}
                     relatingResult={relatingResult}
@@ -244,16 +244,20 @@ function ReadingPanels({
           wisdom={primaryReading.wisdom}
         />
       )}
-      <LinesCard
-        title={relatingReading.title}
-        movingLines={primaryResult.movingLines}
-        sameHexagram={primaryResult.hexagramNumber === relatingResult.hexagramNumber}
-        lines={pickRelevantLines(relatingReading.lines, primaryResult.movingLines)}
-      />
-      <RelatingHexagramCard
-        result={relatingResult}
-        reading={relatingReading}
-      />
+      {primaryResult.movingLines.length > 0 && (
+        <>
+          <LinesCard
+            title={relatingReading.title}
+            movingLines={primaryResult.movingLines}
+            sameHexagram={primaryResult.hexagramNumber === relatingResult.hexagramNumber}
+            lines={pickRelevantLines(relatingReading.lines, primaryResult.movingLines)}
+          />
+          <RelatingHexagramCard
+            result={relatingResult}
+            reading={relatingReading}
+          />
+        </>
+      )}
       {primaryReading.waiGuang.length > 0 && (
         <WaiGuangCard
           title={primaryReading.title}
