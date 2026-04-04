@@ -98,10 +98,6 @@ export default function HexaChingApp() {
                 <li>Primary shows the first hexagram produced by the cast.</li>
                 <li>Relating shows the secondary hexagram produced by inverting moving lines.</li>
               </ol>
-              <div className="rounded-3xl bg-slate-950 px-5 py-4 text-sm leading-6 text-slate-400">
-                The calculation uses the traditional bottom-to-top line order internally even
-                though the inputs are entered top-down for readability.
-              </div>
             </div>
           </aside>
 
